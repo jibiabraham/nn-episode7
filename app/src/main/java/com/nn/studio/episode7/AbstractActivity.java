@@ -5,16 +5,23 @@ import android.accounts.AccountManager;
 import android.app.Activity;
 import android.app.LoaderManager;
 import android.content.ContentResolver;
-import android.content.ContentValues;
-import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
-import android.net.Uri;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.Spanned;
 import android.util.Log;
+import android.widget.TextView;
 
-import com.nn.studio.episode7.R;
+import com.android.volley.toolbox.NetworkImageView;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.parser.Tag;
+import org.jsoup.select.Elements;
 
 /**
  * Created by jibi on 7/7/14.
@@ -35,6 +42,21 @@ public class AbstractActivity extends Activity implements LoaderManager.LoaderCa
 
         ContentResolver.setIsSyncable(dummyAccount, PGContract.AUTHORITY, 1);
         ContentResolver.requestSync(dummyAccount, PGContract.AUTHORITY, Bundle.EMPTY);
+
+        /*
+        Well inline images were a must
+        So this is an attempt to integrate all the caching, fetching blah blah ..
+        I use the volley library for this
+        Resources at
+            1. https://android.googlesource.com/platform/frameworks/volley/
+            2. https://developers.google.com/events/io/sessions/325304728
+            3. http://developer.android.com/training/volley/index.html
+        * */
+        String htmlContent = "<p>Well this is an image thingy here&nbsp;-&nbsp;<img src=\"http://sm.ge.pgstatic.net/paagal/static/emoji/soccer.png\"/></p>";
+        Document doc = Jsoup.parseBodyFragment(htmlContent);
+        TextView tv = (TextView) findViewById(R.id.html);
+        HtmlImageParser imgur =  new HtmlImageParser(getApplicationContext(), tv);
+        tv.setText(Html.fromHtml(doc.outerHtml(), imgur, null));
     }
 
     @Override
