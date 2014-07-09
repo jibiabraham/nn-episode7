@@ -9,6 +9,9 @@ import com.android.volley.toolbox.ImageLoader;
 
 /**
  * Created by jibi on 9/7/14.
+ * References and credits
+ *  1. https://github.com/dmytrodanylyk/dmytrodanylyk/blob/gh-pages/articles/volley-part-3.md
+ *  2. http://developer.android.com/training/volley/request.html
  */
 public class BitmapLruCache
         extends LruCache<String, Bitmap>

@@ -6,6 +6,8 @@ import android.provider.BaseColumns;
 /**
  * Created by jibi on 7/7/14.
  * Contract class for the app DB/ContentProvider
+ * References and credist
+ *  1. NotePad sample app provided in the Android SDK
  */
 public final class PGContract {
     public static final String AUTHORITY = "com.nn.studio.episode7";

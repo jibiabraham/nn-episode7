@@ -14,6 +14,8 @@ import java.io.File;
 
 /**
  * Created by jibi on 9/7/14.
+ * References and credits
+ *  1. https://github.com/dmytrodanylyk/dmytrodanylyk/blob/gh-pages/articles/volley-part-3.md
  */
 public final class NetworkImageRequests {
     private static final String TAG = "NetworkImageRequests";

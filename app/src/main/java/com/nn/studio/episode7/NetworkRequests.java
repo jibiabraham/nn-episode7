@@ -9,6 +9,9 @@ import com.android.volley.toolbox.Volley;
 
 /**
  * Created by jibi on 9/7/14.
+ * References and credits
+ *  1, http://www.androidhive.info/2014/05/android-working-with-volley-library-1/
+ *  2. https://github.com/dmytrodanylyk/dmytrodanylyk/blob/gh-pages/articles/volley-part-3.md
  */
 public final class NetworkRequests {
     private static NetworkRequests mInstance;

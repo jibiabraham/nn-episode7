@@ -22,6 +22,8 @@ import java.util.List;
 
 /**
  * Created by jibi on 7/7/14.
+ * References and credist
+ *  1. NotePad sample app provided in the Android SDK
  */
 public class PGProvider extends ContentProvider {
     // Debugging and logging only

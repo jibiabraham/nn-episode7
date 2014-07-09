@@ -16,6 +16,8 @@ import com.android.volley.toolbox.ImageRequest;
 
 /**
  * Created by jibi on 9/7/14.
+ * References and credits
+ *  1. https://gist.github.com/Antarix/4167655
  */
 public class HtmlImageParser implements Html.ImageGetter {
     private final String TAG = "HtmlImageParser";
