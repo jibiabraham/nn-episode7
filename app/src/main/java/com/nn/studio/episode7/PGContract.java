@@ -34,8 +34,11 @@ public final class PGContract {
         public static final String DEFAULT_SORT_ORDER = "modified DESC";
 
         public static final String COLUMN_NAME_TITLE = "title";
+        public static final String COLUMN_NAME_URL_STARTSWITH = "url_startswith";
         public static final String COLUMN_NAME_CREATE_DATE = "created";
         public static final String COLUMN_NAME_MODIFICATION_DATE = "modified";
+
+        public static final String[] DEFAULT_PROJECTION = { _ID, COLUMN_NAME_TITLE, COLUMN_NAME_URL_STARTSWITH };
     }
 
     // Discussions table
@@ -50,6 +53,7 @@ public final class PGContract {
         public static final int DISCUSSION_ID_PATH_POSITION_NESTED = 3;
 
         public static final Uri CONTENT_URI = Uri.parse(SCHEME + AUTHORITY + PATH_DISCUSSIONS);
+        public static final Uri CONTENT_NESTED_URI = Uri.parse(SCHEME + AUTHORITY + Forums.PATH_FORUMS + "/#" + PATH_DISCUSSIONS);
         public static final Uri CONTENT_ID_URI_BASE = Uri.parse(SCHEME + AUTHORITY + PATH_DISCUSSION_ID);
         public static final Uri CONTENT_ID_URI_PATTERN = Uri.parse(SCHEME + AUTHORITY + PATH_DISCUSSION_ID + "/#");
 
@@ -58,9 +62,12 @@ public final class PGContract {
         public static final String DEFAULT_SORT_ORDER = "modified DESC";
 
         public static final String COLUMN_NAME_TITLE = "title";
+        public static final String COLUMN_NAME_URL = "url";
         public static final String COLUMN_NAME_CREATE_DATE = "created";
         public static final String COLUMN_NAME_MODIFICATION_DATE = "modified";
         public static final String COLUMN_NAME_FORUM_ID = "forum_id";
+
+        public static final String[] DEFAULT_PROJECTION = { _ID, COLUMN_NAME_TITLE, COLUMN_NAME_URL };
     }
 
     // Posts table

@@ -41,7 +41,7 @@ public class AbstractActivity extends Activity implements LoaderManager.LoaderCa
         accountManager.addAccountExplicitly(dummyAccount, "pwd", Bundle.EMPTY);
 
         ContentResolver.setIsSyncable(dummyAccount, PGContract.AUTHORITY, 1);
-        ContentResolver.requestSync(dummyAccount, PGContract.AUTHORITY, Bundle.EMPTY);
+        //ContentResolver.requestSync(dummyAccount, PGContract.AUTHORITY, Bundle.EMPTY);
 
         /*
         Well inline images were a must

@@ -15,6 +15,8 @@ import android.os.ParcelFileDescriptor;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.nn.studio.episode7.model.Discussion;
+
 import java.lang.reflect.Array;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -30,7 +32,7 @@ public class PGProvider extends ContentProvider {
     private static final String TAG = "PGContentProvider";
 
     private static final String DATABASE_NAME = "pg.db";
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 14;
 
     private static HashMap<String, String> sForumsProjectionMap;
     private static HashMap<String, String> sDiscussionsProjectionMap;
@@ -87,6 +89,7 @@ public class PGProvider extends ContentProvider {
         sForumsProjectionMap = new HashMap<String, String>(){{
             put(PGContract.Forums._ID, PGContract.Forums._ID);
             put(PGContract.Forums.COLUMN_NAME_TITLE, PGContract.Forums.COLUMN_NAME_TITLE);
+            put(PGContract.Forums.COLUMN_NAME_URL_STARTSWITH, PGContract.Forums.COLUMN_NAME_URL_STARTSWITH);
             put(PGContract.Forums.COLUMN_NAME_CREATE_DATE, PGContract.Forums.COLUMN_NAME_CREATE_DATE);
             put(PGContract.Forums.COLUMN_NAME_MODIFICATION_DATE, PGContract.Forums.COLUMN_NAME_MODIFICATION_DATE);
         }};
@@ -94,6 +97,7 @@ public class PGProvider extends ContentProvider {
         sDiscussionsProjectionMap = new HashMap<String, String>(){{
             put(PGContract.Discussions._ID, PGContract.Discussions._ID);
             put(PGContract.Discussions.COLUMN_NAME_TITLE, PGContract.Discussions.COLUMN_NAME_TITLE);
+            put(PGContract.Discussions.COLUMN_NAME_URL, PGContract.Discussions.COLUMN_NAME_URL);
             put(PGContract.Discussions.COLUMN_NAME_CREATE_DATE, PGContract.Discussions.COLUMN_NAME_CREATE_DATE);
             put(PGContract.Discussions.COLUMN_NAME_MODIFICATION_DATE, PGContract.Discussions.COLUMN_NAME_MODIFICATION_DATE);
             put(PGContract.Discussions.COLUMN_NAME_FORUM_ID, PGContract.Discussions.COLUMN_NAME_FORUM_ID);
@@ -256,40 +260,47 @@ public class PGProvider extends ContentProvider {
 
     @Override
     public Uri insert(Uri uri, ContentValues initialValues) {
-        Log.w(TAG, Integer.toString(sUriMatcher.match(uri)));
-        if(sUriMatcher.match(uri) != FORUMS){
-            throw new IllegalArgumentException("Unknown URI provided for ContentProvider::Insert");
-        }
-
+        SQLiteDatabase db;
         ContentValues values;
-        if(initialValues != null){
-            values = new ContentValues(initialValues);
-        } else {
-            values = new ContentValues();
+        Long now = System.currentTimeMillis();
+        String activeTable;
+        Uri baseUri;
+
+        int match = sUriMatcher.match(uri);
+        values = initialValues != null ? new ContentValues(initialValues) : new ContentValues();
+
+        switch (match){
+            case DISCUSSIONS:
+            case FORUM_DISCUSSIONS:
+            case DISCUSSION_ID:
+                activeTable = PGContract.Discussions.TABLE_NAME;
+                baseUri = PGContract.Discussions.CONTENT_ID_URI_BASE;
+                break;
+            case POSTS:
+            case POST_ID:
+                activeTable = PGContract.Posts.TABLE_NAME;
+                baseUri = PGContract.Posts.CONTENT_ID_URI_BASE;
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown URI provided for ContentProvider::Insert");
         }
 
-        Long now = Long.valueOf(System.currentTimeMillis());
-        if(values.containsKey(PGContract.Forums.COLUMN_NAME_CREATE_DATE) == false){
-            values.put(PGContract.Forums.COLUMN_NAME_CREATE_DATE, now);
-        }
-        if(values.containsKey(PGContract.Forums.COLUMN_NAME_MODIFICATION_DATE) == false){
-            values.put(PGContract.Forums.COLUMN_NAME_MODIFICATION_DATE, now);
-        }
 
-        SQLiteDatabase db = mOpenHelper.getWritableDatabase();
-        Long rowId = db.insert(
-                PGContract.Forums.TABLE_NAME,
+        db = mOpenHelper.getWritableDatabase();
+        Long rowId = db.insertWithOnConflict(
+                activeTable,
                 null,
-                values
+                values,
+                SQLiteDatabase.CONFLICT_REPLACE
         );
 
         if(rowId > 0){
-            Uri forumUri = ContentUris.withAppendedId(PGContract.Forums.CONTENT_ID_URI_BASE, rowId);
-            getContext().getContentResolver().notifyChange(forumUri, null);
-            return forumUri;
+            Uri notificationUri = ContentUris.withAppendedId(baseUri, rowId);
+            getContext().getContentResolver().notifyChange(notificationUri, null);
+            return notificationUri;
         } else {
             Log.w(TAG, "Failed to insert row into " + uri);
-            return null;
+            return Uri.EMPTY;
         }
 
     }
@@ -314,6 +325,7 @@ public class PGProvider extends ContentProvider {
             db.execSQL("CREATE TABLE " + PGContract.Forums.TABLE_NAME + " ("
                     + PGContract.Forums._ID + " INTEGER PRIMARY KEY,"
                     + PGContract.Forums.COLUMN_NAME_TITLE + " TEXT,"
+                    + PGContract.Forums.COLUMN_NAME_URL_STARTSWITH + " TEXT,"
                     + PGContract.Forums.COLUMN_NAME_CREATE_DATE + " INTEGER,"
                     + PGContract.Forums.COLUMN_NAME_MODIFICATION_DATE + " INTEGER"
                     +");");
@@ -321,6 +333,7 @@ public class PGProvider extends ContentProvider {
             db.execSQL("CREATE TABLE " + PGContract.Discussions.TABLE_NAME + " ("
                     + PGContract.Discussions._ID + " INTEGER PRIMARY KEY,"
                     + PGContract.Discussions.COLUMN_NAME_TITLE + " TEXT,"
+                    + PGContract.Discussions.COLUMN_NAME_URL + " TEXT,"
                     + PGContract.Discussions.COLUMN_NAME_CREATE_DATE + " INTEGER,"
                     + PGContract.Discussions.COLUMN_NAME_MODIFICATION_DATE + " INTEGER,"
                     + PGContract.Discussions.COLUMN_NAME_FORUM_ID + " INTEGER"
