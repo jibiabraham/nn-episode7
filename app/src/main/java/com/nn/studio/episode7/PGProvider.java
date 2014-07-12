@@ -32,7 +32,7 @@ public class PGProvider extends ContentProvider {
     private static final String TAG = "PGContentProvider";
 
     private static final String DATABASE_NAME = "pg.db";
-    private static final int DATABASE_VERSION = 14;
+    private static final int DATABASE_VERSION = 16;
 
     private static HashMap<String, String> sForumsProjectionMap;
     private static HashMap<String, String> sDiscussionsProjectionMap;
@@ -280,6 +280,11 @@ public class PGProvider extends ContentProvider {
             case POST_ID:
                 activeTable = PGContract.Posts.TABLE_NAME;
                 baseUri = PGContract.Posts.CONTENT_ID_URI_BASE;
+                break;
+            case COMMENTS:
+            case COMMENT_ID:
+                activeTable = PGContract.Comments.TABLE_NAME;
+                baseUri = PGContract.Comments.CONTENT_ID_URI_BASE;
                 break;
             default:
                 throw new IllegalArgumentException("Unknown URI provided for ContentProvider::Insert");

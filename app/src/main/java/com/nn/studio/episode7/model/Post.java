@@ -1,6 +1,7 @@
 package com.nn.studio.episode7.model;
 
 import android.content.ContentValues;
+import android.net.Uri;
 
 import com.nn.studio.episode7.PGContract;
 
@@ -21,6 +22,9 @@ public class Post {
     public Long discussion_id;
     public Long forum_id;
     public Long author_id;
+
+    public final String AUTHORITY = "smaug.pagalguy.com";
+    public final Integer DEFAULT_COMMENTS_PAGINATION_SIZE = 10;
 
     public Post(Long _id, String content, String author, Integer likesCount, Integer commentsCount, Long created, Long modified, Long discussion_id, Long forum_id, Long author_id) {
         this._id = _id;
@@ -81,5 +85,14 @@ public class Post {
         cv.put(PGContract.Posts.COLUMN_NAME_FORUM_ID, forum_id);
         cv.put(PGContract.Posts.COLUMN_NAME_AUTHOR_ID, author_id);
         return cv;
+    }
+
+    public String getCommentsUrl(){
+        if(_id == null)
+            return null;
+
+        Uri.Builder builder = new Uri.Builder();
+        builder.scheme("http").authority(AUTHORITY).appendPath("comments").appendPath(Long.toString(_id)).appendQueryParameter("pages", "1,2,3,4,5");
+        return builder.build().toString();
     }
 }

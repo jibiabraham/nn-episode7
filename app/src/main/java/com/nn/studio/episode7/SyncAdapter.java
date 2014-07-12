@@ -56,56 +56,8 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                 String urlStartsWith = forums.getString(indexUrlStarsWith);
                 forumIdMap.put(urlStartsWith, forumId);
             }
+            RequestProxy.getDiscussionsInForums(getContext(), forumIdMap);
             Log.w(TAG, forumIdMap.toString());
-        }
-
-        String BASEURL = "http://smaug.pagalguy.com";
-        String[] FORUMURLS = {
-                "/cat",
-                "/xat-snap-cmat-others",
-                "/bank-po",
-                "/gmat",
-                "/gre-gate-other-exams",
-                "/jobs-careers",
-                "/lounge"
-        };
-        for (final String forumUrl: FORUMURLS){
-            Log.w(TAG, forumUrl);
-            JsonObjectRequest discussionsJsonRequest = new JsonObjectRequest(Request.Method.GET, BASEURL + forumUrl + "?json=1", null,
-                    new Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(JSONObject result) {
-                            try{
-                                JSONArray allDiscussions = result.getJSONObject("payload").getJSONArray("all_threads");
-                                for (int i = 0; i < allDiscussions.length(); i++) {
-                                    JSONObject discussion = allDiscussions.getJSONArray(i).getJSONObject(0);
-                                    Long id = discussion.getLong("id");
-                                    String title = discussion.getString("content");
-                                    Uri url =  Uri.parse(discussion.getString("url"));
-                                    List<String> pathSegments = url.getPathSegments();
-                                    String urlStartsWith = pathSegments.get(0);
-                                    if(forumIdMap.containsKey(urlStartsWith)){
-                                        Uri dUri = cr.insert(
-                                                PGContract.Discussions.CONTENT_ID_URI_BASE,
-                                                new Discussion(id, title, url.toString(), forumIdMap.get(urlStartsWith)).toContentValues()
-                                        );
-                                        //Log.w(TAG, dUri.toString());
-                                        RequestProxy.getPostsInDiscussion(getContext(), url, id, forumIdMap.get(urlStartsWith));
-                                    }
-                                }
-                            } catch (JSONException ex){
-                                ex.printStackTrace();
-                            }
-                        }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError volleyError) {
-                            volleyError.printStackTrace();
-                        }
-                    }
-            );
-            NetworkRequests.getInstance(getContext()).addToRequestQueue(discussionsJsonRequest);
         }*/
     }
 }
