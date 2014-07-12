@@ -1,4 +1,4 @@
-package com.nn.studio.episode7;
+package com.nn.studio.episode7.ui.utils;
 
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
@@ -26,5 +26,9 @@ public class URLDrawable extends BitmapDrawable {
             Log.w(this.getClass().getName(), Boolean.toString(drawable.isVisible()));
             Log.w(this.getClass().getName(), drawable.getBounds().toString());
         }
+    }
+
+    public void setDrawable(Drawable drawable) {
+        this.drawable = drawable;
     }
 }

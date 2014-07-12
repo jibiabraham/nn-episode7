@@ -1,4 +1,4 @@
-package com.nn.studio.episode7;
+package com.nn.studio.episode7.utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -7,12 +7,12 @@ import android.graphics.drawable.Drawable;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
+import com.nn.studio.episode7.ui.utils.URLDrawable;
 
 /**
  * Created by jibi on 9/7/14.
@@ -46,7 +46,7 @@ public class HtmlImageParser implements Html.ImageGetter {
                             fetchedBitmapDrawable.setBounds(0, 0, fetchedBitmapDrawable.getIntrinsicWidth(), fetchedBitmapDrawable.getIntrinsicHeight());
                             container.setMinimumHeight(container.getMeasuredHeight() + fetchedBitmapDrawable.getIntrinsicHeight());
                         }
-                        img.drawable = fetchedBitmapDrawable;
+                        img.setDrawable(fetchedBitmapDrawable);
                         container.invalidate();
                     }
                 }, 0, 0, null,

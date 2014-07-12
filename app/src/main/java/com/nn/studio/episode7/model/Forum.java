@@ -2,7 +2,7 @@ package com.nn.studio.episode7.model;
 
 import android.content.ContentValues;
 
-import com.nn.studio.episode7.PGContract;
+import com.nn.studio.episode7.provider.PGContract;
 
 /**
  * Created by jibi on 10/7/14.

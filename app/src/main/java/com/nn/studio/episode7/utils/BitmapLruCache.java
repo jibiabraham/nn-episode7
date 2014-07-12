@@ -1,4 +1,4 @@
-package com.nn.studio.episode7;
+package com.nn.studio.episode7.utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;

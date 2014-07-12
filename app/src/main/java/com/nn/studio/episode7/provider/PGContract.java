@@ -1,4 +1,4 @@
-package com.nn.studio.episode7;
+package com.nn.studio.episode7.provider;
 
 import android.net.Uri;
 import android.provider.BaseColumns;

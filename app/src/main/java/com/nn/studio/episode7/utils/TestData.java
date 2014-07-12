@@ -1,10 +1,10 @@
-package com.nn.studio.episode7;
+package com.nn.studio.episode7.utils;
 
-import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.nn.studio.episode7.model.Forum;
+import com.nn.studio.episode7.provider.PGContract;
 
 import java.util.HashMap;
 

@@ -1,9 +1,10 @@
-package com.nn.studio.episode7;
+package com.nn.studio.episode7.sync;
 
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
-import android.util.Log;
+
+import com.nn.studio.episode7.sync.SyncAdapter;
 
 /**
  * Created by jibi on 8/7/14.

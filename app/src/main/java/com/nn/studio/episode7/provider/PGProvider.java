@@ -1,4 +1,4 @@
-package com.nn.studio.episode7;
+package com.nn.studio.episode7.provider;
 
 import android.content.ContentProvider;
 import android.content.ContentUris;
@@ -10,15 +10,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
-import android.os.Bundle;
-import android.os.ParcelFileDescriptor;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.nn.studio.episode7.model.Discussion;
+import com.nn.studio.episode7.utils.TestData;
 
-import java.lang.reflect.Array;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 

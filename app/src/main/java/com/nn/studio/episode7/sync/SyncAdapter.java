@@ -1,4 +1,4 @@
-package com.nn.studio.episode7;
+package com.nn.studio.episode7.sync;
 
 import android.accounts.Account;
 import android.content.AbstractThreadedSyncAdapter;

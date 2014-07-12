@@ -1,4 +1,4 @@
-package com.nn.studio.episode7;
+package com.nn.studio.episode7.ui;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
@@ -8,32 +8,17 @@ import android.content.ContentResolver;
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Html;
-import android.text.Spanned;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkResponse;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.JsonRequest;
-import com.android.volley.toolbox.NetworkImageView;
-import com.android.volley.toolbox.Volley;
+import com.nn.studio.episode7.R;
+import com.nn.studio.episode7.provider.PGContract;
+import com.nn.studio.episode7.utils.HtmlImageParser;
 
-import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.parser.Tag;
-import org.jsoup.select.Elements;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by jibi on 7/7/14.
@@ -53,7 +38,7 @@ public class AbstractActivity extends Activity implements LoaderManager.LoaderCa
         accountManager.addAccountExplicitly(dummyAccount, "pwd", Bundle.EMPTY);
 
         ContentResolver.setIsSyncable(dummyAccount, PGContract.AUTHORITY, 1);
-        ContentResolver.requestSync(dummyAccount, PGContract.AUTHORITY, Bundle.EMPTY);
+        //ContentResolver.requestSync(dummyAccount, PGContract.AUTHORITY, Bundle.EMPTY);
 
         /*
         Well inline images were a must

@@ -1,6 +1,5 @@
-package com.nn.studio.episode7;
+package com.nn.studio.episode7.sync;
 
-import android.content.ContentResolver;
 import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
@@ -10,6 +9,8 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.nn.studio.episode7.utils.NetworkRequests;
+import com.nn.studio.episode7.provider.PGContract;
 import com.nn.studio.episode7.model.Comment;
 import com.nn.studio.episode7.model.Discussion;
 import com.nn.studio.episode7.model.Post;

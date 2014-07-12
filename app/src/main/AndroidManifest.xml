@@ -13,7 +13,7 @@
 
 
         <activity
-            android:name="com.nn.studio.episode7.AbstractActivity"
+            android:name=".ui.AbstractActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,11 +23,11 @@
 
         <provider android:authorities="com.nn.studio.episode7"
             android:enabled="true"
-            android:name=".PGProvider">
+            android:name=".provider.PGProvider">
         </provider>
 
         <service
-            android:name="com.nn.studio.episode7.AuthService">
+            android:name=".sync.AuthService">
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator"/>
             </intent-filter>
@@ -37,7 +37,7 @@
         </service>
 
         <service
-            android:name="com.nn.studio.episode7.SyncService"
+            android:name=".sync.SyncService"
             android:exported="true"
             android:process=":sync">
             <intent-filter>

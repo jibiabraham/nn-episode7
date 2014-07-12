@@ -1,9 +1,8 @@
 package com.nn.studio.episode7.model;
 
 import android.content.ContentValues;
-import android.net.Uri;
 
-import com.nn.studio.episode7.PGContract;
+import com.nn.studio.episode7.provider.PGContract;
 
 import org.json.JSONException;
 import org.json.JSONObject;
